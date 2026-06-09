@@ -50,7 +50,6 @@ public class ASCII
         letters.put('X', new String[]{"█   █", " █ █ ", "  █  ", " █ █ ", "█   █"});
         letters.put('Y', new String[]{"█   █", " █ █ ", "  █  ", "  █  ", "  █  "});
         letters.put('Z', new String[]{"█████", "   █ ", "  █  ", " █   ", "█████"});
-        letters.put(' ', new String[]{"   ", "   ", "   ", "   ", "   "});
         letters.put('0', new String[]{" ███ ", "█   █", "█   █", "█   █", " ███ "});
         letters.put('1', new String[]{"  █  ", " ██  ", "  █  ", "  █  ", "█████"});
         letters.put('2', new String[]{" ███ ", "    █", " ███ ", "█    ", "█████"});
@@ -60,14 +59,35 @@ public class ASCII
         letters.put('6', new String[]{" ████", "█    ", "████ ", "█   █", " ████"});
         letters.put('7', new String[]{"█████", "    █", "   █ ", "  █  ", " █   "});
         letters.put('8', new String[]{" ███ ", "█   █", " ███ ", "█   █", " ███ "});
-        letters.put('9', new String[]{" ████", "█   █", " ████", "    █", "████ "});
-        letters.put('.', new String[]{"     ", "     ", "     ", "     ", "  █  "});
-        letters.put(',', new String[]{"     ", "     ", "     ", "  █  ", " █   "});
+        letters.put('9', new String[]{" ███ ", "█   █", " ████", "    █", "████ "});
+        letters.put('+', new String[]{"     ", "  █  ", " ███ ", "  █  ", "     "});
+        letters.put('-', new String[]{"     ", "     ", " ███ ", "     ", "     "});
+        letters.put('*', new String[]{"     ", " █ █ ", "  █  ", " █ █ ", "     "});
+        letters.put('=', new String[]{"     ", "█████", "     ", "█████", "     "});
+        letters.put('.', new String[]{"   ", "   ", "   ", "   ", " █ "});
+        letters.put(',', new String[]{"   ", "   ", "   ", "  █", " █ "});
         letters.put('!', new String[]{"  █  ", "  █  ", "  █  ", "     ", "  █  "});
         letters.put('?', new String[]{" ███ ", "    █", "   █ ", "     ", "  █  "});
-        letters.put('-', new String[]{"     ", "     ", " ███ ", "     ", "     "});
         letters.put('_', new String[]{"     ", "     ", "     ", "     ", "█████"});
-        letters.put('\n', new String[]{});
+        letters.put(':', new String[]{"     ", "  █  ", "     ", "  █  ", "     "});
+        letters.put(';', new String[]{"     ", "  █  ", "     ", "  █  ", " █   "});
+        letters.put('|', new String[]{"  █  ", "  █  ", "  █  ", "  █  ", "  █  "});
+        letters.put('|', new String[]{"  █  ", "  █  ", "  █  ", "  █  ", "  █  "});
+        letters.put('[', new String[]{"  ██ ", "  █  ", "  █  ", "  █  ", "  ██ "});
+        letters.put(']', new String[]{" ██  ", "  █  ", "  █  ", "  █  ", " ██  "});
+        letters.put('(', new String[]{"   █ ", "  █  ", "  █  ", "  █  ", "   █ "});
+        letters.put(')', new String[]{" █   ", "  █  ", "  █  ", "  █  ", " █   "});
+        letters.put('{', new String[]{"  ██ ", "  █  ", " ██  ", "  █  ", "  ██ "});
+        letters.put('}', new String[]{" ██  ", "  █  ", "  ██ ", "  █  ", " ██  "});
+        letters.put('<', new String[]{"     ", "  █  ", " █   ", "  █  ", "     "});
+        letters.put('>', new String[]{"     ", "  █  ", "   █ ", "  █  ", "     "});
+        letters.put('\'', new String[]{"  █  ", "     ", "     ", "     ", "     "});
+        letters.put('\"', new String[]{" █ █ ", "     ", "     ", "     ", "     "});
+        letters.put('`', new String[]{" █   ", "  █  ", "     ", "     ", "     "});
+        letters.put('\\', new String[]{"█    ", " █   ", "  █  ", "   █ ", "    █"});
+        letters.put('#', new String[]{" █ █ ", "█████", " █ █ ", "█████", " █ █ "});
+        letters.put(' ', new String[]{"   ", "   ", "   ", "   ", "   "});
+        // letters.put('', new String[]{"     ", "     ", "     ", "     ", "     "});
     }
 
     public static void print(String text, String color) 
@@ -80,14 +100,33 @@ public class ASCII
                 char c = text.charAt(i);
                 
                 if (letters.containsKey(c)) {
-                    lineResult.append(letters.get(c)[row]).append("  "); 
+                    lineResult.append(letters.get(c)[row]).append(!(c==',' || c=='.') ? " " : ""); 
                 }
             }
             System.out.println(color + lineResult + WHITE);
         }
+        System.out.println();
     }
 
-    public static void printSupportedCharacters() 
+    public static void print(String text) 
+    {
+        text = text.toUpperCase();
+        for (int row = 0; row < 5; row++) {
+            StringBuilder lineResult = new StringBuilder();
+            
+            for (int i = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                
+                if (letters.containsKey(c)) {
+                    lineResult.append(letters.get(c)[row]).append(!(c==',' || c=='.') ? " " : ""); 
+                }
+            }
+            System.out.println(lineResult);
+        }
+        System.out.println();
+    }
+
+    public static void guide() 
     {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -116,7 +155,7 @@ public class ASCII
     {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        System.out.println(GREEN + "///////PRINT_TEXT\\\\\\\\\\\\\\" + WHITE);
+        print("PRINT_TEXT", GREEN);
         System.out.println("\nSYNTAX: [TEXT] / [COLOR]");
         System.out.println("\n-GUIDE: /help");
         System.out.println("-CLEAR: /clear");
@@ -126,7 +165,17 @@ public class ASCII
     public static void main(String[] args) {
         // print("abcdefghijklmnopqrstuvwxyz", RED);
         // print("0123456789", BLUE);
-        // print(".,!?-_", GREEN);
+        // print("+-*=.,!?_:;|[](){}<>\'\"`\\#", GREEN);
+        // print("1+1=2");
+        // print("2-1=1");
+        // print("2*2=4");
+        // print("2:1=2");
+        // print("|-1|=1");
+        // print("Hi! My name is Hao, I'm from Vietnam. How are you?");
+        // print("snake_case");
+        // print("(\'1\') [\"2\"] {`3`}");
+        // print("(()) [[]] {{}} <<>>");
+
 
         menu();
         while(true)
@@ -137,7 +186,7 @@ public class ASCII
             if(input.equalsIgnoreCase("/exit")) break;
             if(input.equalsIgnoreCase("/help")) 
             {
-                printSupportedCharacters(); 
+                guide(); 
                 continue;
             }
             if(input.equalsIgnoreCase("/clear"))
